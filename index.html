@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>hello connect</title>
+<script src="./js/jquery-1.8.1.min.js"></script>
+<script src="./js/masonry.pkgd.min.js"></script>
+<style>
+@import url('./css/main.css');
+</style>
+
+<script type="text/javascript">
+$(function() {
+var container = $('#container');
+// initialize
+container.masonry({
+  columnWidth: 200,
+  itemSelector: '.item'
+});
+
+$.ajax({
+    type: "GET",
+    scriptCharset: 'utf-8',
+    dataType:'json', 
+    url: "http://localhost:5000/data/item.json",
+    success: function(json){
+      var len = json.item.length;
+      for(var i = 0; i < len; i++) {
+	console.debug(json.item[i]);
+        $("#container").append("<div>");
+	$("#container div:last-child").attr({"id": "item"+i,"class": "box col2"}).text(json.item[i].name);
+      }
+      
+    },
+    error:function(){console.log('Miss..');}
+  });
+});
+</script>
+</head>
+<body>
+<div id="demo">
+
+</div>
+
+<div id="container">
+
+</div>
+test
+</body>
+</html>
